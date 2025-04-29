@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    
-  };
+  const handleLogin =  () => { };
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <form onSubmit={handleLogin} className="w-80 space-y-4">
         <h1 className="text-2xl font-bold mb-4">Login</h1>
 
