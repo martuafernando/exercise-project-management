@@ -13,12 +13,11 @@ import useAuthStore from "../stores/authStore";
 
 interface ProtectedLayoutProps {
 	redirectPath: string;
+	redirectCondition: () => boolean;
 }
 
-function ProtectedLayout(props: Readonly<ProtectedLayoutProps>) {
-	const { user } = useAuthStore();
-
-	if (!user) {
+function ProtectedRoute(props: Readonly<ProtectedLayoutProps>) {
+	if (props.redirectCondition()) {
 		return <Navigate to={props.redirectPath} replace />;
 	}
 
@@ -26,13 +25,25 @@ function ProtectedLayout(props: Readonly<ProtectedLayoutProps>) {
 }
 
 export default function AppRoutes() {
+	const { user } = useAuthStore();
+
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
+				<Route
+					element={
+						<ProtectedRoute redirectCondition={() => !!user} redirectPath="/" />
+					}
+				>
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+				</Route>
 
-				<Route element={<ProtectedLayout redirectPath="/login" />}>
+				<Route
+					element={
+						<ProtectedRoute redirectCondition={() => !user} redirectPath="/login" />
+					}
+				>
 					<Route element={<BaseLayout />}>
 						<Route index element={<Home />} />
 					</Route>
