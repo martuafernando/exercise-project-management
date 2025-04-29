@@ -1,9 +1,9 @@
+import AppRoutes from "./routes/AppRoutes"
+
 function App() {
 
   return (
-    <>
-      <div className='w-screen h-screen bg-amber-500'></div>
-    </>
+    <AppRoutes />
   )
 }
 
