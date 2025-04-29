@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import { ButtonLogout } from "./ButtonLogout";
 
 export interface SidebarProps {
-  className?: string;
+	className?: string;
 }
 
 export function Sidebar(props: Readonly<SidebarProps>) {
@@ -21,7 +22,9 @@ export function Sidebar(props: Readonly<SidebarProps>) {
 			</div>
 
 			<div className="p-4 border-t">
-				<button type="button" className="bg-red-500 text-white p-2 rounded">Logout</button>
+				<ButtonLogout className="bg-red-500 text-white rounded">
+					Logout
+				</ButtonLogout>
 			</div>
 		</aside>
 	);

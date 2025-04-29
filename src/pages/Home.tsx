@@ -1,7 +1,11 @@
+import useAuthStore from "../stores/authStore";
+
 export function Home() {
-  return (
-    <div>
-      <p>test</p>
-    </div>
-  )
+	const { user } = useAuthStore();
+
+	return (
+		<div>
+			<p>{user?.name}</p>
+		</div>
+	);
 }

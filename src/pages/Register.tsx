@@ -1,24 +1,51 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFormData from "../hooks/useFormData";
+import api from "../utils/api";
+import { useState, type FormEvent } from "react";
+import { AxiosError } from "axios";
 
 export function Register() {
+	const [message, setMessage] = useState("");
+	const navigate = useNavigate();
 	const [formData, handleChange] = useFormData({
 		name: "",
 		email: "",
 		password: "",
 	});
 
-	const handleRegister = () => {};
+	const handleSubmit = async (e: FormEvent) => {
+		setMessage("");
+		e.preventDefault();
+
+		try {
+			await api.post("/api/auth/register", formData);
+			navigate("/login");
+		} catch (e) {
+			if (e instanceof AxiosError) {
+				setMessage(
+					e.response?.data?.message ??
+						(e as Error).message ??
+						"There is something wrong",
+				);
+			} else {
+				setMessage("There is something wrong");
+			}
+		}
+	};
 
 	return (
 		<div className="h-screen w-screen flex items-center justify-center">
-			<form onSubmit={handleRegister} className="w-80 space-y-4">
+			<form onSubmit={handleSubmit} className="w-80 space-y-4">
 				<h1 className="text-2xl font-bold mb-4">Register</h1>
+
+				{message && (
+					<p className="bg-red-700 text-white p-4 rounded">{message}</p>
+				)}
 
 				<input
 					type="text"
 					name="name"
-          autoComplete="username"
+					autoComplete="username"
 					placeholder="Enter your name"
 					value={formData.name}
 					onChange={(e) => handleChange(e)}
@@ -29,7 +56,7 @@ export function Register() {
 				<input
 					type="email"
 					name="email"
-          autoComplete="email"
+					autoComplete="email"
 					placeholder="Enter your email"
 					value={formData.email}
 					onChange={(e) => handleChange(e)}
@@ -40,7 +67,7 @@ export function Register() {
 				<input
 					type="password"
 					name="password"
-          autoComplete="current-password"
+					autoComplete="current-password"
 					placeholder="Enter password"
 					value={formData.password}
 					onChange={(e) => handleChange(e)}
