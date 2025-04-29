@@ -1,22 +1,35 @@
 import { Link } from "react-router-dom";
 import useFormData from "../hooks/useFormData";
 
-export default function Login() {
+export default function Register() {
 	const [formData, handleChange] = useFormData({
+		name: "",
 		email: "",
 		password: "",
 	});
 
-	const handleLogin = () => {};
+	const handleRegister = () => {};
 
 	return (
-		<div className="w-screen h-screen flex items-center justify-center">
-			<form onSubmit={handleLogin} className="w-80 space-y-4">
-				<h1 className="text-2xl font-bold mb-4">Login</h1>
+		<div className="h-screen w-screen flex items-center justify-center">
+			<form onSubmit={handleRegister} className="w-80 space-y-4">
+				<h1 className="text-2xl font-bold mb-4">Register</h1>
+
+				<input
+					type="text"
+					name="name"
+          autoComplete="username"
+					placeholder="Enter your name"
+					value={formData.name}
+					onChange={(e) => handleChange(e)}
+					className="border p-2 w-full rounded"
+					required
+				/>
 
 				<input
 					type="email"
-          name="email"
+					name="email"
+          autoComplete="email"
 					placeholder="Enter your email"
 					value={formData.email}
 					onChange={(e) => handleChange(e)}
@@ -26,9 +39,9 @@ export default function Login() {
 
 				<input
 					type="password"
-					placeholder="Enter password"
+					name="password"
           autoComplete="current-password"
-          name="password"
+					placeholder="Enter password"
 					value={formData.password}
 					onChange={(e) => handleChange(e)}
 					className="border p-2 w-full rounded"
@@ -39,13 +52,13 @@ export default function Login() {
 					type="submit"
 					className="bg-orange-500 text-white p-2 w-full rounded"
 				>
-					Login
+					Register
 				</button>
 
 				<p className="text-center">
-					Don't have an account?{" "}
-					<Link to="/register" className="text-orange-500">
-						Register now
+					Already have an account?{" "}
+					<Link to="/login" className="text-orange-500">
+						Login
 					</Link>
 				</p>
 			</form>
