@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useFormData from "../hooks/useFormData";
 
-export default function Register() {
+export function Register() {
 	const [formData, handleChange] = useFormData({
 		name: "",
 		email: "",
