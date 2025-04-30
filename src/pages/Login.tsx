@@ -45,10 +45,6 @@ export function Login() {
 			<form onSubmit={handleLogin} className="w-80 space-y-4">
 				<h1 className="text-2xl font-bold mb-4">Login</h1>
 
-				{message && (
-					<p className="bg-red-700 text-white p-4 rounded">{message}</p>
-				)}
-
 				<input
 					type="email"
 					name="email"
@@ -70,6 +66,12 @@ export function Login() {
 					className="border p-2 w-full rounded"
 					required
 				/>
+
+				<div className="h-8 overflow-auto">
+					{message && (
+						<p className="text-red-700">{message}</p>
+					)}
+				</div>
 
 				<button
 					type="submit"
