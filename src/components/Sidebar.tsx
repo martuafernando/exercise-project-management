@@ -9,7 +9,7 @@ export function Sidebar(props: Readonly<SidebarProps>) {
 	return (
 		<aside className={`flex flex-col justify-between ${props.className}`}>
 			<div>
-				<div className="p-6 font-bold text-xl border-b">ProjectManager</div>
+				<div className="p-6 font-bold text-xl">ProjectManager</div>
 
 				<nav className="flex flex-col p-4 space-y-2">
 					<Link to="/" className="hover:bg-gray-100 p-2 rounded">

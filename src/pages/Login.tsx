@@ -5,8 +5,10 @@ import api from "../utils/api";
 import { AxiosError } from "axios";
 import useAuthStore from "../stores/authStore";
 import type User from "../domains/User";
+import { CircleLoading } from "../components/CircleLoading";
 
 export function Login() {
+	const [isLoading, setIsLoading] = useState(false);
 	const [message, setMessage] = useState("");
 	const { setToken, setUser } = useAuthStore();
 	const navigate = useNavigate();
@@ -20,23 +22,22 @@ export function Login() {
 		e.preventDefault();
 
 		try {
-			const response = await api.post("/api/auth/login", formData);
-			const data = response.data;
+			setIsLoading(true);
+			const { data } = await api.post("/api/auth/login", formData);
 
 			setToken(data.accessToken);
 			setUser(data.user as User);
 
 			navigate("/");
-		} catch (e) {
-			if (e instanceof AxiosError) {
-				setMessage(
-					e.response?.data?.message ??
-						(e as Error).message ??
-						"There is something wrong",
-				);
-			} else {
-				setMessage("There is something wrong");
-			}
+		} catch (err) {
+			const errorMessage =
+				err instanceof AxiosError
+					? (err.response?.data?.message ?? err.message)
+					: "There is something wrong";
+
+			setMessage(errorMessage);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -67,18 +68,22 @@ export function Login() {
 					required
 				/>
 
-				<div className="h-8 overflow-auto">
-					{message && (
-						<p className="text-red-700">{message}</p>
-					)}
+				<div className="h-12 overflow-auto">
+					{message && <p className="text-red-700">{message}</p>}
 				</div>
 
-				<button
-					type="submit"
-					className="bg-orange-500 text-white p-2 w-full rounded"
-				>
-					Login
-				</button>
+				{isLoading ? (
+					<div className="bg-gray-300 text-white p-2 w-full rounded text-center h-10 flex justify-center items-center">
+						<CircleLoading />
+					</div>
+				) : (
+					<button
+						type="submit"
+						className="bg-orange-500 text-white p-2 w-full rounded"
+					>
+						Login
+					</button>
+				)}
 
 				<p className="text-center">
 					Don't have an account?{" "}

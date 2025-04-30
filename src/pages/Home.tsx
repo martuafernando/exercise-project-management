@@ -1,3 +1,4 @@
+import { SkeletonCard } from "../components/SkeletonCard";
 import useAuthStore from "../stores/authStore";
 
 export function Home() {
@@ -5,7 +6,7 @@ export function Home() {
 
 	return (
 		<div>
-			<p>{user?.name}</p>
+			<SkeletonCard />
 		</div>
 	);
 }
