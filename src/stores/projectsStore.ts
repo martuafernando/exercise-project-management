@@ -1,8 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type User from "../domains/User";
 import api from "../utils/api";
-import { Project } from "../domains/Project";
+import type { Project } from "../domains/Project";
 
 type ProjectsStore = {
 	projects: Project[] | null;
