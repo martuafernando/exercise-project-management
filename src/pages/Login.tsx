@@ -4,13 +4,12 @@ import { type FormEvent, useState } from "react";
 import api from "../utils/api";
 import { AxiosError } from "axios";
 import useAuthStore from "../stores/authStore";
-import type User from "../domains/User";
 import { CircleLoading } from "../components/CircleLoading";
 
 export function Login() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [message, setMessage] = useState("");
-	const { setToken, setUser } = useAuthStore();
+	const { setToken } = useAuthStore();
 	const navigate = useNavigate();
 	const [formData, handleChange] = useFormData({
 		email: "",
@@ -26,7 +25,6 @@ export function Login() {
 			const { data } = await api.post("/api/auth/login", formData);
 
 			setToken(data.accessToken);
-			setUser(data.user as User);
 
 			navigate("/");
 		} catch (err) {

@@ -10,6 +10,7 @@ import { Register } from "../pages/Register";
 import { Home } from "../pages/Home";
 import { BaseLayout } from "../layouts/BaseLayout";
 import useAuthStore from "../stores/authStore";
+import { Profile } from "../pages/Profile";
 
 interface ProtectedLayoutProps {
 	redirectPath: string;
@@ -25,14 +26,14 @@ function ProtectedRoute(props: Readonly<ProtectedLayoutProps>) {
 }
 
 export default function AppRoutes() {
-	const { user } = useAuthStore();
+	const { token } = useAuthStore();
 
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route
 					element={
-						<ProtectedRoute redirectCondition={() => !!user} redirectPath="/" />
+						<ProtectedRoute redirectCondition={() => !!token} redirectPath="/" />
 					}
 				>
 					<Route path="/login" element={<Login />} />
@@ -41,11 +42,12 @@ export default function AppRoutes() {
 
 				<Route
 					element={
-						<ProtectedRoute redirectCondition={() => !user} redirectPath="/login" />
+						<ProtectedRoute redirectCondition={() => !token} redirectPath="/login" />
 					}
 				>
 					<Route element={<BaseLayout />}>
 						<Route index element={<Home />} />
+						<Route path="/profile" element={<Profile />} />
 					</Route>
 				</Route>
 			</Routes>
