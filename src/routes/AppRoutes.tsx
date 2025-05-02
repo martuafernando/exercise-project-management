@@ -11,6 +11,7 @@ import { Home } from "../pages/Home";
 import { BaseLayout } from "../layouts/BaseLayout";
 import useAuthStore from "../stores/authStore";
 import { Profile } from "../pages/Profile";
+import { ProjectDetail } from "../pages/ProjectDetail";
 
 interface ProtectedLayoutProps {
 	redirectPath: string;
@@ -48,6 +49,7 @@ export default function AppRoutes() {
 					<Route element={<BaseLayout />}>
 						<Route index element={<Home />} />
 						<Route path="/profile" element={<Profile />} />
+						<Route path="/projects/:projectId" element={<ProjectDetail />} />
 					</Route>
 				</Route>
 			</Routes>

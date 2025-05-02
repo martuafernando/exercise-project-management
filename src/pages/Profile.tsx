@@ -1,23 +1,7 @@
-import { useEffect, useState } from "react";
 import useAuthStore from "../stores/authStore";
-import api from "../utils/api";
-import type User from "../domains/User";
 
 export function Profile() {
-	const [user, setUser] = useState<User|null>(null);
-
-	useEffect(() => {
-		const fetchUserProfile = async () => {
-			try {
-				const response = await api.get("/api/auth/me");
-				setUser(response.data.user);
-			} catch (error) {
-				console.error("Failed to fetch profile", error);
-			}
-		};
-
-		fetchUserProfile();
-	}, []);
+	const { user } = useAuthStore()
 
 	if (!user) {
 		return (
